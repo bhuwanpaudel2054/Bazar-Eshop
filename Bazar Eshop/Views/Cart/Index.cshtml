@@ -1,0 +1,108 @@
+﻿<div class="container">
+    <div class="">
+        <a class="btn btn-outline-secondary float-right mr-5" asp-action="History" asp-controller="cart">History</a>
+    </div>
+</div>
+<div class="cart_section">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                @if (TempData["Success"] != null)
+                {
+                    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>}
+                <div class="cart_container">
+                    <div class="cart_title">Shopping Cart<small> (@ViewBag.CountItems item in your cart) </small></div>
+                    <div class="cart_items">
+                        @if (ViewBag.CountItems != 0)
+                        {
+                            @foreach (var item in ViewBag.Cart)
+                            {
+                                var photoPath = "~/images/" + (item.PhotoPath ?? "fas.jpg");
+                                <ul class="cart_list">
+
+                                    <li class="cart_item clearfix">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <div class="cart_item_image img-thumbnail"><img src="@photoPath" alt="" asp-append-version="true"></div>
+                                            </div>
+                                            <div class="col-10">
+
+                                                <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="cart_item_name cart_info_col">
+                                                                <div class="cart_item_title">Name</div>
+                                                                <div class="name" style="line-height: 1.5em; height: 6.3em;overflow: hidden;">
+                                                                    <div class="cart_item_text mt-0">@item.Name</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="cart_item_name cart_info_col ">
+                                                                <a class=" btn btn-info col-10 mb-3" asp-action="ProductDetails" asp-controller="Product" asp-route-id="@item.Id">Details</a>
+                                                                <a class=" btn btn-danger col-10" asp-controller="Cart" asp-action="RemoveCart" asp-route-id="@item.Id">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            <div class="cart_item_quantity cart_info_col">
+                                                                <div class="cart_item_title">Quantity</div>
+                                                                <div class="cart_item_text">@item.Quantity</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="cart_item_price cart_info_col">
+                                                                <div class="cart_item_title">Price</div>
+                                                                <div class="cart_item_text">₹@item.Price</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            <div class="cart_item_total cart_info_col">
+                                                                <div class="cart_item_title">Total</div>
+                                                                <div class="cart_item_text">₹@(item.Price * item.Quantity)</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                </ul>} }
+                        else
+                        {<ul class="cart_list">
+
+                                <li class="cart_item clearfix">
+                                    <div class="cart_item_quantity cart_info_col">
+                                        <div class="cart_item_title"><h5><center>No items in cart</center></h5></div>
+
+                                    </div>
+
+                                </li>
+
+
+                            </ul>}
+                    </div>
+                    <div class="order_total">
+                        <div class="order_total_content text-md-right">
+                            <div class="order_total_title">Order Total:</div>
+                            <div class="order_total_amount">₹@ViewBag.Total</div>
+                        </div>
+                    </div>
+
+                    <div class="cart_buttons">
+                        <a asp-controller="product" asp-action="UserProductList">
+                            <button type="button" class="button cart_button_clear">Continue Shopping</button>
+                        </a>
+                        @if (ViewBag.CountItems != 0 && ViewBag.Cart != null)
+                        {
+                            <a type="button" class="button cart_button_checkout" asp-controller="cart" asp-action="CheckOut">CheckOut</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

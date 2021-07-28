@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<div class="row">
+   @* <div class="col-md-1"></div>*@
+    <div class="col-md-12">
+        <div id="carouselExampleIndicators" class="carousel slide"  data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                @{ var index = 0;}
+                @foreach (var slideShowList in Model)
+                {
+                    if (slideShowList.Status)
+                    {
+                        var photoPath = "~/images/" + (slideShowList.PhotoPath ?? "111.jpg");
+                <div class="carousel-item  @(index == 0 ? "active" : "")">
+                    <img class="d-block w-100" src="@photoPath" alt="First slide" asp-append-version="true">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@slideShowList.Caption</h5>
+                        
+                    </div>
+                </div>
+                        index++;
+                        
+                    }
+                }
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+   @* <div class="col-md-1"></div>*@
+</div>
+@*<section class="sub">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <span></span>
+                    </div>
+                    <div class="col-lg-10">
+                        <h5>Return & Exchange</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <span></span>
+                    </div>
+                    <div class="col-lg-10">
+                        Return Gift Cards
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <span></span>
+                    </div>
+                    <div class="col-lg-10">
+                        Online suopport
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+<section class="collection">
+    <div class="container py-5">
+        <h1 class="text-center">New Collection</h1>
+        <div class="row py-5">
+            @foreach (var latestList in ViewBag.LatestProducts)
+            {
+                var photoPath = "~/images/" + (latestList.PhotoPath ?? "fas1.jpg");
+                <div class="col-lg-3">
+                    <div class="card ml-auto mr-auto" style="overflow: hidden;">
+                        <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@latestList.Id"> <img src="@photoPath" class="img-fluid mb-3" alt="" asp-append-version="true" /></a>
+                        <div class="name" style="line-height: 1.5em; height: 3em;overflow: hidden;"> <h5><p class="text-center">@latestList.Name</p></h5></div>
+                        <p  class="text-center"> <small><del>$@latestList.Price</del><span>$12.99</span></small></p>
+                        <div class="card-footer text-center">
+                            <a class="btn btn-outline-info" asp-action="Buy" asp-controller="Cart" asp-route-id="@latestList.Id">Add cart <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+                        <a class="btn btn-outline-info m-2" asp-action="ProductDetails" asp-controller="Product" asp-route-id="@latestList.Id"> Details </a></div>
+                    </div>
+                </div>
+
+            }
+
+            
+
+        </div>
+    </div>
+</section>

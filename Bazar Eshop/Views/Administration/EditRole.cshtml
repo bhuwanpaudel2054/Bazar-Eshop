@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "_Layout1";
+}
+@model EditRoleViewModel
+
+<form method="post" class="card">
+
+    <div class="card-header">
+        <label asp-for="Id" class="col-form-label"></label>
+        <input disabled asp-for="Id" class="form-control " />
+    </div>
+    <div class="card-body">
+        <div class="card-header">
+            <label asp-for="RoleName"></label>
+
+        </div>
+        <div class="form-group mt-2">
+            <input asp-for="RoleName" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-info">Update</button>
+    </div>
+    <div class="card-footer">
+        <h2>List of users in @Model.RoleName Role</h2>
+        @if (Model.Users.Any())
+        {
+            @foreach (var user in Model.Users)
+            {   <div class="card-header">
+                    @user
+                </div>
+            }
+        }
+        else
+        {
+            <h5>no users are assign in this Role</h5>
+        }
+        <div class="btn mt-2">
+            <a asp-action="ManageUsersForRole" asp-controller="administration" asp-route-RoleId="@Model.Id" class="btn btn-info">ManageRole</a>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,301 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - Bazar_Eshop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="jq/jquery-2.1.1.min.js"></script>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="js/bootstrap.min.js"></script>
+    <script src="~/js/script.js"></script>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- this is for dropdown menu-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .dropdown-toggle::after {
+            content: none;
+        }
+        
+        
+      
+    </style>
+</head>
+<body>
+   
+        <div class="heading row">
+            <nav class="navbar navbar-expand-lg bh-black">
+                <div class="container">
+                    <div class="row">
+                        <div class="dropdown col-md-1">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                @await Component.InvokeAsync("Category")
+
+                            </div>
+                        </div>
+                        <div class="logo col-md-3">
+                            <a asp-controller="home" asp-action="index" class="navbar-brand pl-5"><i class="fa fa-shopping-bag"></i>BAZAR</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
+                        <div class="search col-md-5">
+
+                            <form class="form-inline" method="get" asp-controller="Product" asp-action="Search">
+                                <input class="searchbar mr-2" type="search" placeholder="Search" aria-label="Search" name="Keyword">
+                                <button class="btn0" type="submit"><i class="fa fa-search fa-2x"></i></button>
+                            </form>
+
+                        </div>
+                        <div class="headingMenu col-md-3 ">
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav m-auto">
+                                    @if (signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Super Admin") || User.IsInRole("Moderator")))
+                                    {
+                                        <a class="nav-item nav-link pr-5" asp-action="Dashboard" asp-controller="Administration"><i class="fa fa-lock fa-2x" aria-hidden="true"></i></a>
+                                    }
+                                    <a class="nav-item nav-link pr-5" asp-action="UserProductList" asp-controller="Product">Product</a>
+
+
+                                    <a class="nav-item nav-link pr-5" asp-controller="cart" asp-action="index"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true">
+                                        </i><span class="badge rounded-pill badge-notification bg-danger" style="position:absolute;">@await Component.InvokeAsync("Cart")</span></a>
+                                    <div class="dropdown">
+                                        <a class="nav-item nav-link pr-5" href="#" data-toggle="dropdown"> <i class="fa fa-user fa-2x" aria-hidden="true"></i></a>
+                                        <div class="dropdown-menu">
+                                            @if (signInManager.IsSignedIn(User))
+                                            {
+                                                <a href="#" class="dropdown-item">@User.Identity.Name</a>
+                                                <form method="post" asp-controller="Account" asp-action="Logout" class="dropdown-item">
+                                                    <button type="submit" class="nav-item btn btn-link py-0"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <a asp-controller="account" asp-action="Register" class="dropdown-item"><i class="fa fa-user-plus" aria-hidden="true"></i>SignUp</a>
+                                                <a asp-controller="account" asp-action="login" class="dropdown-item"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a>
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+   
+
+    <main role="main" class="pb-3">
+
+        @RenderBody()
+    </main>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-light text-center ">
+        <!-- Grid container -->
+        <div class="container p-4">
+
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Facebook -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!" role="button"><i class="fa fa-facebook-f"></i></a>
+
+                <!-- Twitter -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!" role="button"><i class="fa fa-twitter"></i></a>
+
+                <!-- Google -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!" role="button"><i class="fa fa-google"></i></a>
+
+                <!-- Instagram -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i class="fa fa-instagram"></i></a>
+
+                <!-- Linkedin -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button"><i class="fa fa-linkedin"></i></a>
+                <!-- Github -->
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button"><i class="fa fa-github"></i></a>
+            </section>
+            <!-- Section: Social media -->
+            <!-- Section: Form -->
+            <section class="">
+                <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                        <!--Grid column-->
+                        <div class="col-auto">
+                            <p class="pt-2">
+                                <strong>Sign up for our newsletter</strong>
+                            </p>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-md-5 col-12">
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <input type="email" id="form5Example2" class="form-control" />
+                                <label class="form-label" for="form5Example2">Email address</label>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+                        <!--Grid column-->
+                        <div class="col-auto">
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary mb-4">
+                                Subscribe
+                            </button>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </form>
+            </section>
+            <!-- Section: Form -->
+            <!-- Section: Text -->
+            <section class="mb-4">
+                <p>
+                    Bazar strives to provide customers the best shopping experience in Nepal.
+                    The online store is updated daily and new products are added every day to cater to all your needs.
+                    Visit Daraz.com.np to experience shopping in Nepal as never before.
+                    
+                </p>
+            </section>
+            <!-- Section: Text -->
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">General Information:</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-dark">Bazar Private Limited</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Naxal, Kathmandu</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">VAT No. 00000</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">+977 9844729103 </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">TRENDING PRODUCTS</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-dark">  iPhone 7 Plus</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark"> Mt 15</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark"> Samsung Galaxy A52, Samsung Galaxy A71</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark"> Samsung Galaxy M31,Realme C15</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">COMPUTER COMPONENTS</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-dark">Ram, Motherboards</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Processors, Desktop Casings,</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">CPU Cooling Fans</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Gaming Graphic Cards</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                        <h5 class="text-uppercase">TRENDING</h5>
+
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="#!" class="text-dark"> Oneplus Z</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Dashain Dhamaka</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark"> Mobile Week</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="text-dark">Oneplus 8 Lite</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Links -->
+
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2021 Copyright:
+            <a href="#">BAZAR.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+    <!-- Footer -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- this is noline form file you must check by commenting the code -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>
+

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_Layout1";
+}
+@model IEnumerable<ApplicationUser>
+@{
+    ViewBag.Title = "All Users";
+}
+
+@if (Model.Any())
+{
+    foreach (var user in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                User Id :@user.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-info" asp-action="EditUser" asp-controller="Administration" asp-route-Id="@user.Id">Edit User</a>
+                @*<a class="btn btn-danger" asp-action="DeleteUser" asp-controller="Administration" asp-route-Id="@user.Id">Delete User</a>*@
+
+                <a class="btn btn-danger" asp-action="DeleteUser" asp-controller="Administration" asp-route-Id="@user.Id"
+                                        onclick="return confirm('Are you sure you want to delete user:@user.UserName ')">Delete</a>
+                <a class="btn btn-primary" asp-action="ManageRolesForUser" asp-controller="Administration" asp-route-userId="@user.Id">Manage Roles</a>
+
+            </div>
+
+        </div>
+    }
+}
+else
+{
+    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Add New User</a>
+}

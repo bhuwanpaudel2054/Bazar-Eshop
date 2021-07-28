@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">name</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var list in ViewBag.invoices)
+            {
+                <tr>
+                    <th scope="row">@list.Id</th>
+                    <td>@list.Name</td>
+                    <td>@list.Created.ToString("MM/dd/yyyy")</td>
+                    <td>@(list.Status == 1 ?"Pending" :"Done")</td>
+                    <td><a asp-controller="cart" asp-action="InvoiceDetails" asp-route-id="@list.Id">Details</a></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

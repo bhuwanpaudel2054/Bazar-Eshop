@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "_Layout1";
+}
+
+@model UserClaimViewModel
+    <div class="card-header text-center"><h2>User Claims</h2></div>
+    <div class="card-body">
+        @for (int i = 0; i < Model.Claims.Count; i++)
+        {
+            <div class="form-check m-1">
+                <h3>
+                    <label class="form-check-label" asp-for="@Model.Claims[i].ClaimType">
+                        @(i+1).@Model.Claims[i].ClaimType
+                    </label>
+                </h3>
+            </div>
+        }
+        </div>

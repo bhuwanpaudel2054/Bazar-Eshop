@@ -1,0 +1,120 @@
+﻿<link href="~/css/site.css" rel="stylesheet" />
+
+
+<div class="row m-2 ">
+
+    <div class="col-md-2 pt-4 pb-5 align-self-baseline "
+         style="
+        border-radius: 10px;
+        background-color: #efefef;
+">
+
+        <table>
+            @foreach (var category in Model)
+            {
+                if (category.Parent == null)
+                {
+
+                    <tr>
+
+                        <td><b><a asp-controller="Category" asp-action="SubCategoryList" asp-route-id="@category.Id">@category.Name</a></b></td>
+                    </tr>
+                }
+                if (category.InverseParents != null && category.InverseParents.Count != 0)
+                {
+                    foreach (var subCategory in category.InverseParents)
+                    {
+
+                        <tr>
+
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a asp-action="ProductInSubCategory" asp-controller="Product" asp-route-id="@subCategory.Id" asp-route-parentId="@subCategory.ParentId">@subCategory.Name</a></td>
+                        </tr>
+
+
+                    }
+                }
+            }
+
+        </table>
+    </div>
+
+
+    <div class="col-md-8 text-center">
+
+
+        <div class="card-group">
+            <div class="col-12 pt-3" style="
+    border-radius: 10px;
+        background-color: #e9b2b2;
+        text-align:center;
+    ">
+                <h4>  <p class="text-center text-dark">@ViewBag.SelecteCategory.Name</p> </h4>
+            </div>
+
+            @foreach (var productList in ViewBag.ProductList)
+            {
+                @foreach (var subCategoryList in ViewBag.SubCategoryList)
+                {
+                    if (productList.CategoryId == subCategoryList.Id)
+                    {
+
+                        var photoPath = "~/images/" + (productList.PhotoPath ?? "fas.jpg");
+
+                        <div class="card mr-auto ml-auto" style=" min-width: 14rem; max-width: 20.5%;">
+
+
+                            <a asp-action="ProductDetails" asp-controller="Product" asp-route-id="@productList.Id">
+                                <img class="card-img-top" src="@photoPath"
+                                     asp-append-version="true">
+                            </a>
+                            <div class="card-body">
+                                <div class="name" style="line-height: 1.5em; height: 3em;overflow: hidden;">
+                                    <p class="card-title text-justify">@productList.Name</p>
+                                </div>
+                                <p class="card-text text-justify">
+                                    $ @productList.Price
+                                </p>
+                                <a class="btn btn-outline-info" asp-action="Buy" asp-controller="Cart" asp-route-id="@productList.Id">Add cart <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+                                <a class="btn btn-outline-info m-2" asp-action="ProductDetails" asp-controller="Product" asp-route-id="@productList.Id"> Details </a>
+                            </div>
+                        </div>
+
+                    }
+                }
+            }
+        </div>
+    </div>
+
+
+    <div class="col-md-2 pb-4 align-self-baseline" style="
+        border-radius: 10px;
+        background-color: #efefef
+">
+
+
+
+        <div class="list-group m-2">
+            <a class="list-group-item list-group-item-action active ">
+                @ViewBag.SelecteCategory.Name
+            </a>
+        </div>
+
+        <ul class="list-group" style="list-style: none;">
+            @foreach (var subcategoryList in ViewBag.SubCategoryList)
+            {
+
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a asp-action="ProductInSubCategory" asp-controller="Product" asp-route-id="@subcategoryList.Id" asp-route-parentId="@subcategoryList.ParentId">
+                        @subcategoryList.Name
+                    </a>
+                    <span class="badge badge-primary badge-pill">2</span>
+                </li>
+                <li></li>
+
+
+
+            }
+        </ul>
+    </div>
+</div>

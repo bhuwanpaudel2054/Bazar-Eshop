@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"> Product Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Created</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Sub Total </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var list in @ViewBag.InvoiceDetails)
+            {
+                <tr>
+                    <th scope="row">@list.Product.Id</th>
+                    <td>@list.Product.Name</td>
+                    <td>@list.Price</td>
+                    <td>@list.Quantity</td>
+                    <td>@(list.Price * list.Quantity)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

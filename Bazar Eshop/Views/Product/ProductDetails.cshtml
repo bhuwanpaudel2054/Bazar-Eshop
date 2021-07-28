@@ -1,0 +1,84 @@
+﻿@{ 
+    var photoPath = "~/images/" + (Model.PhotoPath ?? "fas.jpg");
+}
+<div class="container">
+    <div class="card">
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img src="@photoPath" asp-append-version="true" /></div>
+
+                    </div>
+
+
+                </div>
+                <div class="details col-md-6">
+                    <form asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Id" method="post">
+                        <h3 class="product-title">@Model.Name</h3>
+
+                        <p class="product-description">@Model.Description</p>
+                        <h4 class="price">current price: <span>$@Model.Price</span></h4>
+                        <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong></strong></p>
+                        <p class="product-description">
+                            @Model.Details
+                        </p>
+                        <h5 class="sizes">
+                            sizes:
+
+                            <span class="size" data-toggle="tooltip" title="medium">m</span>
+
+                        </h5>
+
+                        <div class="number mb-4">
+                            <h5 class="sizes">
+                                Quantity:
+
+                            </h5>
+                            <span class="minus "><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            <input type="text" name="quantity" value="1" />
+                            <span class="plus "><i class="fa fa-plus" aria-hidden="true"></i></span>
+                            
+                        </div>
+                        <h5 class="colors">
+                            colors:
+                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                            <span class="color green"></span>
+
+                        </h5>
+
+
+                        <div class="action ml-5">
+                            <button type="submit" class="add-to-cart btn btn-outline-success">add to cart <span class="fa fa-cart-plus"></span></button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts{
+        <script>
+
+            $(document).ready(function () {
+                $('.minus').click(function () {
+                    var $input = $(this).parent().find('input');
+                    var count = parseInt($input.val()) - 1;
+                    count = count < 1 ? 1 : count;
+                    $input.val(count);
+                    $input.change();
+                    return false;
+                });
+                $('.plus').click(function () {
+                    var $input = $(this).parent().find('input');
+                    $input.val(parseInt($input.val()) + 1);
+                    $input.change();
+                    return false;
+                });
+            });
+</script>
+
+
+    }
+</div>

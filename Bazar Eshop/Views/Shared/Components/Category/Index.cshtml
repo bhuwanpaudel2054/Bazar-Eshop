@@ -1,0 +1,19 @@
+﻿
+    <div class="dropdown">
+        @foreach (var category in Model)
+        {
+            if (category.ParentId == null)
+            {
+        <a asp-action="SubCategoryList" asp-controller="Category" asp-route-id="@category.Id" class="p-2">
+           @category.Name
+        </a>
+            <div class="dropdown-divider"></div>
+            }
+               @* @foreach (var subcategory in category.InverseParents)
+                {
+                    <li> <a> @subcategory.Name </a></li>
+                }*@
+
+           
+        }
+    </div>

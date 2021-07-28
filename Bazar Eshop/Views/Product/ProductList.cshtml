@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "_Layout1";
+}
+
+    <div class="row">
+        <div class="m-2">
+            <a asp-action="AddProduct" asp-controller="Product" class="btn btn-dark float-right">Add New Product</a>
+        </div>
+        <div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Photos</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var productList in Model)
+                    {
+                        var photoPath = (productList.PhotoPath ?? "fas.jpg").ToString();
+
+                        <tr>
+                            <td>@productList.Id</td>
+                            <td>@productList.Name</td>
+                            <td>
+                                <img class="img-thumbnail" src="~/images/@photoPath"
+                                     style="height:100px; width:100px;" asp-append-version="true">
+                            </td>
+                            <td>@(productList.Status ? "Show" : "Hide")</td>
+                            <td>@productList.Price</td>
+                            <td>@productList.Category.Name</td>
+                            <td>
+                                <a asp-action="UpdateProduct" asp-controller="Product" asp-route-id="@productList.Id">Edit</a>|
+                                <a asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@productList.Id"
+                                   onclick="return confirm('Are you sure ?')">
+                                    Delete
+                                </a>
+                            </td>
+
+
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+

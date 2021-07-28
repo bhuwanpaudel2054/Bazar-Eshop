@@ -1,0 +1,57 @@
+﻿@model Bazar_Eshop.ViewModels.SliderViewModel
+
+@{
+    Layout = "_Layout1";
+}
+
+<div class="container">
+    <div class="UploadField">
+
+        <form enctype="multipart/form-data" method="post" class="mt-3">
+            <input hidden asp-for="Id" />
+           
+            <div class="form-group row">
+                <label asp-for="Caption" class="col-sm-2 col-form-label">Slider Photo</label>
+                <div class="custom-file col-sm-10">
+                    <input asp-for="Photo" class="form-control custom-file-input">
+                    <label class="custom-file-label">Choose File......</label>
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Caption" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Caption" class="form-control">
+                    <span asp-validation-for="Caption" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-check">
+                    <label>
+                        <input type="checkbox" asp-for="Status" /> Status
+                    </label>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary m-2">Create</button>
+
+                </div>
+            </div>
+
+            @section Scripts{
+                <script>
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        })
+                    });</script>
+
+
+            }
+        </form>
+    </div>
+</div>

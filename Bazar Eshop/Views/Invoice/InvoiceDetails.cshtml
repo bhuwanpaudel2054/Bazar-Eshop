@@ -1,0 +1,58 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <address>
+
+                <strong>TO,</strong><br>
+                @ViewBag.invoiceDetails.ApplicationUser.City<br>
+
+                <abbr>Phone No:</abbr> (+977)@ViewBag.invoiceDetails.ApplicationUser.PhoneNumber
+            </address>
+
+            <address>
+                <strong>@ViewBag.invoiceDetails.ApplicationUser.FirstName @ViewBag.invoiceDetails.ApplicationUser.LastName</strong><br>
+                <a href="mailto:#">@ViewBag.invoiceDetails.ApplicationUser.Email</a>
+            </address>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"> Product Id</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Sub Total </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var list in ViewBag.invoice)
+                    {
+                        <tr>
+                            <th scope="row">@list.Product.Id</th>
+                            <td>@list.Product.Name</td>
+                            <td>@list.Price</td>
+                            <td>@list.Quantity</td>
+                            <td>@(list.Price * list.Quantity)</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        @if (ViewBag.invoiceDetails.Status == 1)
+        {
+            <div class="col-12">
+                <form method="post" asp-action="PaymentComplete" asp-controller="Invoice" asp-route-id="@ViewBag.invoiceDetails.Id">
+                    <input type="hidden" name="id" value="@ViewBag.invoiceDetails.Id" />
+                    <button type="submit" class="btn btn-outline-success float-right">Payment complete</button>
+
+                </form>
+            </div>
+        }
+    </div>
+
+</div>

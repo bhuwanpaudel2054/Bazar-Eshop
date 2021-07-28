@@ -1,0 +1,8 @@
+﻿@using Bazar_Eshop
+@using Bazar_Eshop.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Bazar_Eshop.ViewModels
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+@inject SignInManager<ApplicationUser> signInManager

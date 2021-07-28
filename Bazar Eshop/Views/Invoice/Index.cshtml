@@ -1,0 +1,33 @@
+﻿@{ 
+    Layout = "_Layout1";
+}
+
+<div class="container">
+    <div class="box-shadow">
+        <h3 class="box-title">Invoice List</h3>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in ViewBag.invoices)
+            {
+            <tr>
+                <th scope="row">@invoice.Id</th>
+                <td>@invoice.Name</td>
+                <td>@invoice.Created.ToString("mm/dd/yyyy")</td>
+                <td>@(invoice.Status ==1 ? "Pending" :"Done")</td>
+                <td><a asp-controller="Invoice" asp-action="InvoiceDetails" asp-route-id="@invoice.Id">Details</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

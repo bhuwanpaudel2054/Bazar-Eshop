@@ -1,0 +1,140 @@
+﻿@{
+    Layout = "_Layout1";
+}
+@{decimal countUsers = 0;}
+@{ int countSales = 0;}
+@foreach (var list in ViewBag.ToalProduct)
+{
+    countUsers = countUsers + list.Price;
+}
+
+@foreach (var list in Model)
+{
+    if (list.Invoice.Status == 0)
+    {
+        countSales = countSales + list.Quantity;
+    }
+}
+
+<div class="container-fluid">
+    <!-- Start Page Content -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card p-30">
+                <div class="media">
+                    <div class="media-left meida media-middle">
+                        <span><i class="fa fa-usd fa-2x" style="color:blue"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>@countUsers</h2>
+                        <p class="m-b-0">Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-30">
+                <div class="media">
+                    <div class="media-left meida media-middle">
+                        <span><i class="fa fa-shopping-cart fa-2x" style="color:blue"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>@countSales</h2>
+                        <p class="m-b-0">Sales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-30">
+                <div class="media">
+                    <div class="media-left meida media-middle">
+                        <span><i class="fa fa-archive fa-2x" style="color:blue"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>@ViewBag.TotalProduct</h2>
+                        <p class="m-b-0">Products</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-30">
+                <div class="media">
+                    <div class="media-left meida media-middle">
+                        <span><i class="fa fa-user fa-2x" style="color:blue"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>@ViewBag.NoOfUsers</h2>
+                        <p class="m-b-0">Customer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bg-white m-l-0 m-r-0 box-shadow ">
+
+
+        <!-- column -->
+    </div>
+    <div class="row">
+
+        <div class="col-lg">
+            <div class="card">
+                <div class="card-title">
+                    <h4>Recent Orders </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>create</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var invoice in ViewBag.invoices)
+                                {
+
+
+                                <tr>
+                                    <td>
+                                        <div class="round-img">
+                                            <a href=""><img src="images/avatar/4.jpg" alt=""></a>
+                                        </div>
+                                    </td>
+                                    <td>@invoice.Name</td>
+                                    <td><span>@invoice.Created.ToString("mm/dd/yyyy")</span></td>
+
+                                    <td>
+                                        @if (invoice.Status == 0)
+                                        {<span class="badge badge-success">Done</span>}
+                                        else
+                                        {
+                                            <span class="badge badge-warning">Pending</span>
+                                        }
+                                    </td>
+                                    <td><span>
+                                    <a asp-controller="Invoice" asp-action="InvoiceDetails" asp-route-id="@invoice.Id">Details</a></span></td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- End PAge Content -->
+</div>
